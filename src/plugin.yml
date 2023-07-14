@@ -1,0 +1,9 @@
+name: EasyBedwars
+main: net.nocpiun.bedwars.Main
+author: NriotHrreion
+version: 0.0.1
+api-version: 1.13
+commands:
+   bedwars:
+      usage: /bedwars [start|stop|copper-point|iron-point|diamond-point|emerald-point]
+      description: Bedwars Command
