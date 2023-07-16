@@ -9,10 +9,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.configuration.*;
 
 import net.nocpiun.bedwars.game.*;
+import net.nocpiun.bedwars.gui.*;
 
 public class CommandHandler implements CommandExecutor, TabExecutor {
+	private Plugin plugin;
 	private Game game;
-	private boolean isGameStart = false;
+	
+	public CommandHandler(Plugin plugin) {
+		this.plugin = plugin;
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override
@@ -21,28 +26,25 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 		
 		final String type = args[0];
 		final Player player = (Player) sender;
-		Plugin plugin = Bukkit.getPluginManager().getPlugin("EasyBedwars");
 		Configuration config = plugin.getConfig();
 		
 		switch(type) {
 		case "start":
-			if(this.isGameStart) {
+			if(this.game != null && this.game.isGameStart) {
 				sender.sendMessage("The game has already started");
 				return true;
 			}
 			
-			this.isGameStart = true;
-			this.game = new Game(plugin);
+			this.game = new Game(this.plugin, player.getWorld());
 			this.game.start();
 			sender.sendMessage("§e§lGame Start!");
 			break;
 		case "stop":
-			if(!this.isGameStart) {
+			if(this.game == null || !this.game.isGameStart) {
 				sender.sendMessage("The game has stopped");
 				return true;
 			}
 			
-			this.isGameStart = false;
 			this.game.stop();
 			this.game = null;
 			sender.sendMessage("stopped");
@@ -104,8 +106,29 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			sender.sendMessage("§f§lWaiting Hub §r§ais set");
 			break;
 		case "common-villager":
+			List<Location> commonOrigin = (List<Location>) config.get("common-villagers");
+			commonOrigin.add(player.getLocation());
+			config.set("common-villagers", commonOrigin);
+			sender.sendMessage("§aAdded");
 			break;
 		case "buff-villager":
+			List<Location> buffOrigin = (List<Location>) config.get("buff-villagers");
+			buffOrigin.add(player.getLocation());
+			config.set("buff-villagers", buffOrigin);
+			sender.sendMessage("§aAdded");
+			break;
+		case "clear-villager":
+			config.set("common-villagers", new ArrayList<>());
+			config.set("buff-villagers", new ArrayList<>());
+			sender.sendMessage("§aCleared");
+			break;
+		case "choose-team":
+			for(Player onlinePlayer : this.plugin.getServer().getOnlinePlayers()) {
+				GUI teamGUI = new TeamGUI();
+				Bukkit.getPluginManager().registerEvents(teamGUI, this.plugin);
+				teamGUI.open(onlinePlayer);
+			}
+			Utils.sendMessageToEveryone("§aOpened the team GUI");
 			break;
 		default:
 			return false;
@@ -130,6 +153,8 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 		list.add("waiting-hub");
 		list.add("common-villager");
 		list.add("buff-villager");
+		list.add("clear-villager");
+		list.add("choose-team");
 		
 		if(sender instanceof Player) {
 			if(args.length > 1) return null;

@@ -5,5 +5,8 @@ version: 0.0.1
 api-version: 1.13
 commands:
    bedwars:
-      usage: /bedwars [start|stop|copper-point|iron-point|diamond-point|emerald-point]
+      usage: /bedwars <args>
       description: Bedwars Command
+   hub:
+      usage: /hub
+      description: Teleport to the waiting hub

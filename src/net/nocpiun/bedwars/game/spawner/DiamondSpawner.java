@@ -20,8 +20,8 @@ public class DiamondSpawner extends BukkitRunnable {
 		final List<Location> locations = (List<Location>) config.get("diamond-points");
 		final ItemStack itemStack = new ItemStack(Material.DIAMOND);
 		
-		for(int i = 0; i < locations.size(); i++) {
-			locations.get(i).getWorld().dropItem(locations.get(i), itemStack).setPickupDelay(0);
+		for(Location location : locations) {
+			location.getWorld().dropItem(location, itemStack).setPickupDelay(0);
 		}
 	}
 }

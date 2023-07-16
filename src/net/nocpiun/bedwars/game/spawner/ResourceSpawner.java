@@ -23,16 +23,16 @@ public class ResourceSpawner {
 		this.diamond = new DiamondSpawner(config);
 		this.emerald = new EmeraldSpawner(config);
 		
-//		this.copper.runTaskTimer(this.plugin, 10, 20);
-//		this.iron.runTaskTimer(this.plugin, 10, 500);
-//		this.diamond.runTaskTimer(this.plugin, 10, 1200);
-//		this.emerald.runTaskTimer(this.plugin, 10, 1100);
+		this.copper.runTaskTimer(this.plugin, 10, 30);
+		this.iron.runTaskTimer(this.plugin, 10, 250);
+		this.diamond.runTaskTimer(this.plugin, 10, 1200);
+		this.emerald.runTaskTimer(this.plugin, 10, 1100);
 		
 		// dev
-		this.copper.runTaskTimer(this.plugin, 10, 20);
-		this.iron.runTaskTimer(this.plugin, 10, 20);
-		this.diamond.runTaskTimer(this.plugin, 10, 20);
-		this.emerald.runTaskTimer(this.plugin, 10, 20);
+//		this.copper.runTaskTimer(this.plugin, 10, 20);
+//		this.iron.runTaskTimer(this.plugin, 10, 20);
+//		this.diamond.runTaskTimer(this.plugin, 10, 20);
+//		this.emerald.runTaskTimer(this.plugin, 10, 20);
 	}
 	
 	public void stop() {

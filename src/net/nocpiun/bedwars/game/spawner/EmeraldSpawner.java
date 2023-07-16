@@ -20,8 +20,8 @@ public class EmeraldSpawner extends BukkitRunnable {
 		final List<Location> locations = (List<Location>) config.get("emerald-points");
 		final ItemStack itemStack = new ItemStack(Material.EMERALD);
 		
-		for(int i = 0; i < locations.size(); i++) {
-			locations.get(i).getWorld().dropItem(locations.get(i), itemStack).setPickupDelay(0);
+		for(Location location : locations) {
+			location.getWorld().dropItem(location, itemStack).setPickupDelay(0);
 		}
 	}
 }
