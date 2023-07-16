@@ -3,10 +3,12 @@ package net.nocpiun.bedwars;
 import java.util.*;
 
 import org.bukkit.*;
+import org.bukkit.entity.*;
 import org.bukkit.enchantments.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.entity.*;
+
+import net.nocpiun.bedwars.store.CurrencyType;
 
 public class Utils {
 	public static Material currencyTypeToMaterial(CurrencyType currencyType) {

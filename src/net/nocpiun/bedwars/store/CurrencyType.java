@@ -1,4 +1,4 @@
-package net.nocpiun.bedwars;
+package net.nocpiun.bedwars.store;
 
 public enum CurrencyType {
 	COPPER("Copper Ingot"),
