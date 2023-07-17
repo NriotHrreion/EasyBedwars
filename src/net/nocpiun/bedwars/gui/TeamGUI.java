@@ -10,9 +10,11 @@ import org.bukkit.inventory.meta.*;
 import net.nocpiun.bedwars.team.*;
 
 public class TeamGUI extends GUI {
+	private static final String title = "Choose a Team";
+	
 	@Override
 	public Inventory render(Player player) {
-		Inventory inventory = Bukkit.createInventory(player, 27, "Choose a Team");
+		Inventory inventory = Bukkit.createInventory(player, 27, title);
 		
 		// Border
 		for(int i = 0; i < inventory.getSize(); i++) {
@@ -38,7 +40,7 @@ public class TeamGUI extends GUI {
 	
 	@EventHandler
 	public void onClick(InventoryClickEvent event) {
-		super.onClick(event);
+		if(!event.getView().getTitle().equals(title)) return;
 		if(event.getCurrentItem() == null) return;
 		
 		Material chosenTeam = event.getCurrentItem().getType();
@@ -51,7 +53,9 @@ public class TeamGUI extends GUI {
 			TeamManager.get().addPlayer(TeamType.BLUE, player);
 			break;
 		default:
-			return;
+			break;
 		}
+		
+		super.onClick(event);
 	}
 }

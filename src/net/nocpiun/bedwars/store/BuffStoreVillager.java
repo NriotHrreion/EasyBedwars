@@ -1,27 +1,23 @@
 package net.nocpiun.bedwars.store;
 
-import java.util.Arrays;
-
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
-import org.bukkit.event.Event.Result;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.ItemMeta;
 
 public class BuffStoreVillager extends StoreVillager {
-	private ItemStack[] items;
+	private static final String title = "Team Buff";
 	
 	public BuffStoreVillager(Location location) {
-		super(location, "Team Buff");
+		super(location, title);
 	}
 	
 	@Override
 	public Inventory render(Player player) {
-		Inventory inventory = Bukkit.createInventory(player, 54, "Team Buff [in dev]");
+		Inventory inventory = Bukkit.createInventory(player, 54, title);
 		
 		// Border
 		for(int i = 0; i < inventory.getSize(); i++) {
@@ -45,18 +41,15 @@ public class BuffStoreVillager extends StoreVillager {
 	@EventHandler
 	public void onTrade(PlayerInteractEntityEvent event) {
 		if(!(event.getRightClicked() instanceof AbstractVillager)) return;
-		if(event.getRightClicked().getCustomName().compareTo("Team Buff") != 0) return;
+		if(!event.getRightClicked().getCustomName().equals(title)) return;
 		
-		final Inventory inventory = this.render(event.getPlayer());
-		this.items = inventory.getContents();
 		super.onTrade(event);
 	}
 	
 	@EventHandler
 	public void onClick(InventoryClickEvent event) {
-		if(!Arrays.equals(event.getInventory().getContents(), this.items)) return;
+		if(!event.getView().getTitle().equals(title)) return;
 		if(event.getCurrentItem() == null) return;
-		if(event.getAction() != InventoryAction.PICKUP_ALL || event.getResult() != Result.ALLOW) return;
 		
 		super.onClick(event, event.getCurrentItem());
 	}

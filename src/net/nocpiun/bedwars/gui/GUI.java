@@ -1,10 +1,7 @@
 package net.nocpiun.bedwars.gui;
 
-import java.util.*;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
-import org.bukkit.event.Event.Result;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.Inventory;
 
@@ -16,16 +13,6 @@ public abstract class GUI implements Listener {
 	}
 	
 	public void onClick(InventoryClickEvent event) {
-		if(event.getResult() != Result.ALLOW) return;
-		if(Arrays.equals(event.getInventory().getContents(), this.render((Player) event.getWhoClicked()).getContents())) {
-			event.setCancelled(true);
-		}
-		if(
-			event.getAction() == InventoryAction.MOVE_TO_OTHER_INVENTORY ||
-			event.getAction() == InventoryAction.HOTBAR_MOVE_AND_READD ||
-			event.getAction() == InventoryAction.HOTBAR_SWAP
-		) {
-			event.setCancelled(true);
-		}
+		event.setCancelled(true);
 	}
 }
