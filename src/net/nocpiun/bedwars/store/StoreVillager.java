@@ -71,6 +71,8 @@ public abstract class StoreVillager extends GUI {
 			_item.addUnsafeEnchantments(clickedItem.getEnchantments());
 			_item.setAmount(amount);
 			inventory.addItem(_item);
+			// Play sound
+			player.playSound(player.getLocation(), Sound.BLOCK_NOTE_BLOCK_HARP, 1, 0);
 		} else { // Unable to pay
 			player.sendMessage("§cYour money is not enough to buy this");
 		}

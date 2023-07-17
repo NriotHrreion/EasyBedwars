@@ -24,6 +24,13 @@ public class TeamManager {
 		this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
 		this.setPlayerAmountDisplay("§c§lRed", 0);
 		this.setPlayerAmountDisplay("§b§lBlue", 0);
+		
+		this.init();
+	}
+	
+	public void init() {
+		this.red.setHasBed(true);
+		this.blue.setHasBed(true);
 	}
 	
 	public Team getTeam(TeamType teamType) {

@@ -8,7 +8,9 @@ import org.bukkit.configuration.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.event.block.*;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
+import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.*;
 import org.bukkit.plugin.Plugin;
 
@@ -24,6 +26,7 @@ public class Game implements Listener {
 	
 	private List<StoreVillager> villagers = new ArrayList<>();
 	private List<Location> placedBlockLocations = new ArrayList<>();
+	private List<Player> alivePlayers = new ArrayList<>();
 	
 	public boolean isGameStart = false;
 	
@@ -82,6 +85,8 @@ public class Game implements Listener {
 				bluePlayer.setBedSpawnLocation(bluePoint, true);
 				bluePlayer.teleport(bluePoint);
 			}
+			
+			this.alivePlayers.addAll(players);
 		} else { // No player joined in the game
 			this.stop();
 		}
@@ -97,8 +102,14 @@ public class Game implements Listener {
 			}
 		}
 		
+		Configuration config = this.plugin.getConfig();
+		TeamManager manager = TeamManager.get();
+		
 		// Game Listener (self)
 		HandlerList.unregisterAll(this);
+		this.placedBlockLocations.forEach(location -> {
+			location.getBlock().setType(Material.AIR);
+		});
 		this.placedBlockLocations.clear();
 		
 		// Villagers
@@ -107,10 +118,29 @@ public class Game implements Listener {
 			HandlerList.unregisterAll(villager);
 		}
 		this.villagers.clear();
+		
+		// Players
+		List<Player> players = manager.getPlayersInTeam();
+		for(Player player : players) {
+			player.getInventory().clear();
+			player.teleport((Location) config.get("waiting-hub"));
+		}
+		
+		// Teams
+		manager.init();
 	}
 	
-	private void breakBed(TeamType team, Player player) {
-		// @TODO
+	private void breakBed(TeamType teamType, Player player) {
+		Team team = TeamManager.get().getTeam(teamType);
+		team.setHasBed(false);
+		Utils.sendMessageToEveryone("§6§l"+ player.getName() +" §r§ebroke the bed of §r"+ team.name);
+		
+		player.playSound(player.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 1, 0);
+		team.players.forEach(teamPlayer -> {
+			teamPlayer.sendTitle("§c§lYour Bed is Broken", null, 10, 50, 10);
+			teamPlayer.playSound(teamPlayer.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 1, 0);
+			
+		});
 	}
 	
 	@EventHandler
@@ -188,16 +218,54 @@ public class Game implements Listener {
 	
 	@EventHandler
 	public void onPlayerRespawn(PlayerRespawnEvent event) {
+		TeamManager manager = TeamManager.get();
 		Player player = event.getPlayer();
-		if(!TeamManager.get().hasPlayerJoinedTeam(player)) return;
+		if(!manager.hasPlayerJoinedTeam(player)) return;
 		
-		if(TeamManager.get().getTeam(player).getHasBed()) {
+		if(manager.getTeam(player).getHasBed()) {
 			player.getInventory().setItem(0, new ItemStack(Material.COMPASS));
 			player.getInventory().setItem(1, new ItemStack(Material.WOODEN_SWORD));
 			player.setNoDamageTicks(80);
 		} else { // The bed has been broken, unable to respawn
+			this.alivePlayers.remove(player);
 			player.setGameMode(GameMode.SPECTATOR);
 			Utils.sendMessageToEveryone("§6§l"+ player.getName() +" §ris OUT");
+		}
+		
+		Team team = null;
+		boolean isEnded = true;
+		for(Player _player : this.alivePlayers) {
+			if(team == null) {
+				team = manager.getTeam(_player);
+			} else if(!manager.getTeam(_player).equals(team)) {
+				isEnded = false;
+				break;
+			}
+		}
+		if(isEnded) {
+			for(Player _player : this.alivePlayers) {
+				_player.sendTitle("§6§lVictory", null, 10, 50, 10);
+			}
+			Utils.sendMessageToEveryone(team.name +" §rhas §lWON §rthe game");
+			this.stop();
+		}
+	}
+	
+	@EventHandler
+	public void onPlayerCraft(CraftItemEvent event) {
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onPlayerDamaged(EntityDamageByEntityEvent event) {
+		if(!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player)) return;
+		
+		Player damager = (Player) event.getDamager();
+		Player damaged = (Player) event.getEntity();
+		TeamManager manager = TeamManager.get();
+		
+		if(manager.getTeam(damager).equals(manager.getTeam(damaged))) {
+			event.setCancelled(true);
 		}
 	}
 }

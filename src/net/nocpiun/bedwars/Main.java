@@ -17,6 +17,7 @@ public class Main extends JavaPlugin implements CommandExecutor {
 	@Override
 	public void onEnable() {
 		System.out.println("EasyBedwars is Loaded!");
+		Utils.sendMessageToEveryone("§e§oThanks for using EasyBedwars!");
 		this.init();
 	}
 	

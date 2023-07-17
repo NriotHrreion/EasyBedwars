@@ -63,7 +63,7 @@ public class CommonStoreVillager extends StoreVillager {
 		efficientEnchantments.put(Enchantment.DIG_SPEED, 2);
 		inventory.setItem(37, Utils.createStoreItem(Material.SHEARS, "Shears", 1, 20, CurrencyType.COPPER, efficientEnchantments));
 		inventory.setItem(38, Utils.createStoreItem(Material.IRON_PICKAXE, "Pickaxe", 1, 12, CurrencyType.COPPER, efficientEnchantments));
-		inventory.setItem(39, Utils.createStoreItem(Material.IRON_AXE, "Axe", 1, 3, CurrencyType.IRON));
+		inventory.setItem(39, Utils.createStoreItem(Material.IRON_AXE, "Axe", 1, 6, CurrencyType.IRON));
 		inventory.setItem(40, Utils.createStoreItem(Material.ARROW, "Arrow", 8, 2, CurrencyType.IRON));
 		inventory.setItem(41, Utils.createStoreItem(Material.GOLDEN_APPLE, "Golden Apple", 1, 3, CurrencyType.IRON));
 		inventory.setItem(42, Utils.createStoreItem(Material.ENDER_PEARL, "Ender Pearl", 1, 4, CurrencyType.EMERALD));
