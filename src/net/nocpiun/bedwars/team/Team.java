@@ -36,6 +36,7 @@ public class Team {
 	
 	public void clear() {
 		this.players.clear();
+		TeamManager.get().setPlayerAmountDisplay(name, 0);
 	}
 	
 	public boolean isInTeam(Player player) {

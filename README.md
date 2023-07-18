@@ -19,11 +19,14 @@ The following is the usage of the commands in the plugin:
 - `/bedwars emerald-point`: Add a emerald point
 - `/bedwars red-point`: Set the spawnpoint of the red team
 - `/bedwars blue-point`: Set the spawnpoint of the blue team
+- `/bedwars red-bed`: Set the bed location of the red team
+- `/bedwars blue-bed`: Set the bed location of the blue team
 - `/bedwars waiting-hub`: Set the waiting hub point
 - `/bedwars common-villager`: Add a common villager point, where will spawn a villager selling the items
 - `/bedwars buff-villager`: [in dev]
 - `/bedwars clear-villager`: Clear all the villager points
 - `/bedwars choose-team`: Open the team GUI for everyone
+- `/bedwars random`: Randomly add players into different teams
 
 ## Store Items
 

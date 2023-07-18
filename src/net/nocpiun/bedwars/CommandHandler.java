@@ -10,6 +10,7 @@ import org.bukkit.configuration.*;
 
 import net.nocpiun.bedwars.game.*;
 import net.nocpiun.bedwars.gui.*;
+import net.nocpiun.bedwars.team.TeamManager;
 
 public class CommandHandler implements CommandExecutor, TabExecutor {
 	private Plugin plugin;
@@ -153,6 +154,10 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			}
 			Utils.sendMessageToEveryone("§aOpened the team GUI");
 			break;
+		case "random":
+			TeamManager.get().random();
+			Utils.sendMessageToEveryone("§aSystem has randomly added players into teams");
+			break;
 		default:
 			return false;
 		}
@@ -180,6 +185,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 		list.add("buff-villager");
 		list.add("clear-villager");
 		list.add("choose-team");
+		list.add("random");
 		
 		if(sender instanceof Player) {
 			if(args.length > 1) return null;

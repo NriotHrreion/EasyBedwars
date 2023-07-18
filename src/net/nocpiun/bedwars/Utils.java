@@ -114,4 +114,19 @@ public class Utils {
             return null;
         }
     }
+	
+	public static <T> List<T> randomizeList(List<T> list) { 
+		List<T> result = new ArrayList<>();
+		for(int i = 0; i < list.size(); i++) {
+			T item = list.get(Utils.getRandom(0, list.size() - 1));
+			result.add(item);
+			list.remove(item);
+			i--;
+		}
+		return result;
+	}
+	
+	public static int getRandom(int min, int max) {
+		return (int) (Math.random() * (max - min + 1) + min);
+	}
 }

@@ -2,9 +2,11 @@ package net.nocpiun.bedwars.team;
 
 import java.util.*;
 
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
+import org.bukkit.*;
+import org.bukkit.entity.*;
 import org.bukkit.scoreboard.*;
+
+import net.nocpiun.bedwars.Utils;
 
 public class TeamManager {
 	private static TeamManager instance;
@@ -134,6 +136,22 @@ public class TeamManager {
 	
 	public boolean getHasBed(TeamType teamType) {
 		return this.getTeam(teamType).getHasBed();
+	}
+	
+	public void random() {
+		this.cleanTeam(TeamType.RED);
+		this.cleanTeam(TeamType.BLUE);
+		
+		boolean isRed = true;
+		List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
+		for(Player player : Utils.randomizeList(players)) {
+			if(isRed) {
+				this.addPlayer(TeamType.RED, player);
+			} else {
+				this.addPlayer(TeamType.BLUE, player);
+			}
+			isRed = !isRed;
+		}
 	}
 	
 	public void terminate() {
