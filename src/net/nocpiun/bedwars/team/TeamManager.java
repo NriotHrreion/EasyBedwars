@@ -56,6 +56,18 @@ public class TeamManager {
 		return null;
 	}
 	
+	public TeamType getTeamType(Player player) {
+		for(Player redPlayer : this.red.players) {
+			if(redPlayer.equals(player)) return TeamType.RED;
+		}
+		
+		for(Player bluePlayer : this.blue.players) {
+			if(bluePlayer.equals(player)) return TeamType.BLUE;
+		}
+		
+		return null;
+	}
+	
 	public void addPlayer(TeamType teamType, Player player) {
 		Team team = this.getTeam(teamType);
 		

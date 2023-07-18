@@ -110,6 +110,16 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			config.set("blue-point", player.getLocation());
 			sender.sendMessage("§b§lBlue §r§apoint is set");
 			break;
+		case "red-bed":
+			if(!isOp) break;
+			config.set("red-bed", player.getLocation());
+			sender.sendMessage("§c§lRed §r§abed is set");
+			break;
+		case "blue-bed":
+			if(!isOp) break;
+			config.set("blue-bed", player.getLocation());
+			sender.sendMessage("§b§lBlue §r§abed is set");
+			break;
 		case "waiting-hub":
 			if(!isOp) break;
 			config.set("waiting-hub", player.getLocation());
@@ -163,6 +173,8 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 		list.add("emerald-point");
 		list.add("red-point");
 		list.add("blue-point");
+		list.add("red-bed");
+		list.add("blue-bed");
 		list.add("waiting-hub");
 		list.add("common-villager");
 		list.add("buff-villager");

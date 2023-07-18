@@ -12,6 +12,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.*;
+import org.bukkit.inventory.meta.*;
 import org.bukkit.plugin.Plugin;
 
 import net.nocpiun.bedwars.Utils;
@@ -69,11 +70,9 @@ public class Game implements Listener {
 			
 			for(Player player : players) {
 				player.setGameMode(GameMode.SURVIVAL);
-				player.getInventory().clear();
 				player.getEnderChest().clear();
 				
-				player.getInventory().setItem(0, new ItemStack(Material.COMPASS));
-				player.getInventory().setItem(1, new ItemStack(Material.WOODEN_SWORD));
+				this.playerInit(player);
 			}
 			
 			// Spawnpoint & Teleport
@@ -89,7 +88,14 @@ public class Game implements Listener {
 			this.alivePlayers.addAll(players);
 		} else { // No player joined in the game
 			this.stop();
+			return;
 		}
+		
+		// Beds
+		final Location redBed = (Location) config.get("red-bed");
+		final Location blueBed = (Location) config.get("blue-bed");
+		Utils.setBed(redBed.getBlock(), redBed, Material.RED_BED);
+		Utils.setBed(blueBed.getBlock(), blueBed, Material.BLUE_BED);
 	}
 	
 	public void stop() {
@@ -128,6 +134,30 @@ public class Game implements Listener {
 		
 		// Teams
 		manager.init();
+	}
+	
+	private void playerInit(Player player) {
+		if(!TeamManager.get().hasPlayerJoinedTeam(player)) return;
+		TeamType team = TeamManager.get().getTeamType(player);
+
+		player.getInventory().clear();
+		player.getInventory().setItem(0, new ItemStack(Material.COMPASS));
+		player.getInventory().setItem(1, new ItemStack(Material.WOODEN_SWORD));
+		
+		ItemStack hat = new ItemStack(Material.LEATHER_HELMET);
+		LeatherArmorMeta hatMeta = (LeatherArmorMeta) hat.getItemMeta();
+		switch(team) {
+		case RED:
+			hatMeta.setColor(Color.fromRGB(176, 46, 38));
+			break;
+		case BLUE:
+			hatMeta.setColor(Color.fromRGB(60, 68, 170));
+			break;
+		default: // impossible
+			break;
+		}
+		hat.setItemMeta(hatMeta);
+		player.getInventory().setHelmet(hat);
 	}
 	
 	private void breakBed(TeamType teamType, Player player) {
@@ -223,8 +253,7 @@ public class Game implements Listener {
 		if(!manager.hasPlayerJoinedTeam(player)) return;
 		
 		if(manager.getTeam(player).getHasBed()) {
-			player.getInventory().setItem(0, new ItemStack(Material.COMPASS));
-			player.getInventory().setItem(1, new ItemStack(Material.WOODEN_SWORD));
+			this.playerInit(player);
 			player.setNoDamageTicks(80);
 		} else { // The bed has been broken, unable to respawn
 			this.alivePlayers.remove(player);
