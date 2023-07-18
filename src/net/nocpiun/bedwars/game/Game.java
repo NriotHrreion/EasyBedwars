@@ -268,4 +268,35 @@ public class Game implements Listener {
 			event.setCancelled(true);
 		}
 	}
+	
+	@EventHandler
+	public void onInteractBlock(PlayerInteractEvent event) {
+		if(
+			event.getClickedBlock().getType() == Material.CHEST ||
+			event.getClickedBlock().getType() == Material.ENDER_CHEST
+		) return;
+		
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onInteractEntity(PlayerInteractEntityEvent event) {
+		if(!(event.getRightClicked() instanceof ItemFrame)) return;
+		
+		// Prevent rotating and putting in item in item frame
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onInteractAtEntity(PlayerInteractAtEntityEvent event) {
+		event.setCancelled(true);
+	}
+	
+	@EventHandler
+	public void onTakingOutItem(EntityDamageByEntityEvent event) {
+		if(!(event.getEntity() instanceof ItemFrame)) return;
+		
+		// Prevent taking out item in item frame
+		event.setCancelled(true);
+	}
 }

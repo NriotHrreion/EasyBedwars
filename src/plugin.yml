@@ -10,3 +10,7 @@ commands:
    hub:
       usage: /hub
       description: Teleport to the waiting hub
+permissions:
+   bedwars.admin:
+      description: Let admin can manage the whole bedwars game
+      default: op

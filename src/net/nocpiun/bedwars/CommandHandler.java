@@ -26,10 +26,12 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 		
 		final String type = args[0];
 		final Player player = (Player) sender;
+		final boolean isOp = player.hasPermission("bedwars.admin");
 		Configuration config = plugin.getConfig();
 		
 		switch(type) {
 		case "start":
+			if(!isOp) break;
 			if(this.game != null && this.game.isGameStart) {
 				sender.sendMessage("The game has already started");
 				return true;
@@ -40,6 +42,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			sender.sendMessage("§e§lGame Start!");
 			break;
 		case "stop":
+			if(!isOp) break;
 			if(this.game == null || !this.game.isGameStart) {
 				sender.sendMessage("The game has stopped");
 				return true;
@@ -50,6 +53,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			sender.sendMessage("stopped");
 			break;
 		case "copper-point":
+			if(!isOp) break;
 			List<Location> copperOrigin = (List<Location>) config.get("copper-points");
 			if(args.length > 1 && args[1] == "clear") {
 				copperOrigin.clear();
@@ -61,6 +65,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			sender.sendMessage("§aAdded");
 			break;
 		case "iron-point":
+			if(!isOp) break;
 			List<Location> ironOrigin = (List<Location>) config.get("iron-points");
 			if(args.length > 1 && args[1] == "clear") {
 				ironOrigin.clear();
@@ -72,6 +77,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			sender.sendMessage("§aAdded");
 			break;
 		case "diamond-point":
+			if(!isOp) break;
 			List<Location> diamondOrigin = (List<Location>) config.get("diamond-points");
 			if(args.length > 1 && args[1] == "clear") {
 				diamondOrigin.clear();
@@ -83,6 +89,7 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			sender.sendMessage("§aAdded");
 			break;
 		case "emerald-point":
+			if(!isOp) break;
 			List<Location> emeraldOrigin = (List<Location>) config.get("emerald-points");
 			if(args.length > 1 && args[1] == "clear") {
 				emeraldOrigin.clear();
@@ -94,30 +101,36 @@ public class CommandHandler implements CommandExecutor, TabExecutor {
 			sender.sendMessage("§aAdded");
 			break;
 		case "red-point":
+			if(!isOp) break;
 			config.set("red-point", player.getLocation());
 			sender.sendMessage("§c§lRed §r§apoint is set");
 			break;
 		case "blue-point":
+			if(!isOp) break;
 			config.set("blue-point", player.getLocation());
 			sender.sendMessage("§b§lBlue §r§apoint is set");
 			break;
 		case "waiting-hub":
+			if(!isOp) break;
 			config.set("waiting-hub", player.getLocation());
 			sender.sendMessage("§f§lWaiting Hub §r§ais set");
 			break;
 		case "common-villager":
+			if(!isOp) break;
 			List<Location> commonOrigin = (List<Location>) config.get("common-villagers");
 			commonOrigin.add(player.getLocation());
 			config.set("common-villagers", commonOrigin);
 			sender.sendMessage("§aAdded");
 			break;
 		case "buff-villager":
+			if(!isOp) break;
 			List<Location> buffOrigin = (List<Location>) config.get("buff-villagers");
 			buffOrigin.add(player.getLocation());
 			config.set("buff-villagers", buffOrigin);
 			sender.sendMessage("§aAdded");
 			break;
 		case "clear-villager":
+			if(!isOp) break;
 			config.set("common-villagers", new ArrayList<>());
 			config.set("buff-villagers", new ArrayList<>());
 			sender.sendMessage("§aCleared");
