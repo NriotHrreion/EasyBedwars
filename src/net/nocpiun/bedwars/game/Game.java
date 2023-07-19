@@ -299,29 +299,20 @@ public class Game implements Listener {
 	
 	@EventHandler
 	public void onInteractBlock(PlayerInteractEvent event) {
-//		if(
-//			event.getClickedBlock() != null &&
-//			(
-//				event.getClickedBlock().getType() == Material.CHEST ||
-//				event.getClickedBlock().getType() == Material.ENDER_CHEST
-//			)
-//		) return;
-//		
-//		event.setCancelled(true);
-		if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-            Block block = event.getClickedBlock();
-            switch(block.getType()) {
-            case BARREL:
-            case ANVIL:
-            case DECORATED_POT:
-            case SPRUCE_HANGING_SIGN:
-            case SPRUCE_SIGN:
-            case SPRUCE_TRAPDOOR:
-            	event.setCancelled(true);
-            	break;
-            default:
-            	return;
-            }
+		if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+		
+		Block block = event.getClickedBlock();
+        switch(block.getType()) {
+        case BARREL:
+        case ANVIL:
+        case DECORATED_POT:
+        case SPRUCE_HANGING_SIGN:
+        case SPRUCE_SIGN:
+        case SPRUCE_TRAPDOOR:
+        	event.setCancelled(true);
+        	break;
+        default:
+        	return;
         }
 	}
 	
