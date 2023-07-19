@@ -3,6 +3,7 @@ package net.nocpiun.bedwars.store;
 import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.*;
@@ -50,6 +51,7 @@ public class BuffStoreVillager extends StoreVillager {
 	public void onClick(InventoryClickEvent event) {
 		if(!event.getView().getTitle().equals(title)) return;
 		if(event.getCurrentItem() == null) return;
+		if(event.getResult() != Result.ALLOW) return;
 		
 		super.onClick(event, event.getCurrentItem());
 	}

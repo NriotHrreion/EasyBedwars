@@ -169,7 +169,6 @@ public class Game implements Listener {
 		team.players.forEach(teamPlayer -> {
 			teamPlayer.sendTitle("§c§lYour Bed is Broken", null, 10, 50, 10);
 			teamPlayer.playSound(teamPlayer.getLocation(), Sound.ENTITY_ENDER_DRAGON_DEATH, 1, 0);
-			
 		});
 	}
 	
@@ -300,12 +299,30 @@ public class Game implements Listener {
 	
 	@EventHandler
 	public void onInteractBlock(PlayerInteractEvent event) {
-		if(
-			event.getClickedBlock().getType() == Material.CHEST ||
-			event.getClickedBlock().getType() == Material.ENDER_CHEST
-		) return;
-		
-		event.setCancelled(true);
+//		if(
+//			event.getClickedBlock() != null &&
+//			(
+//				event.getClickedBlock().getType() == Material.CHEST ||
+//				event.getClickedBlock().getType() == Material.ENDER_CHEST
+//			)
+//		) return;
+//		
+//		event.setCancelled(true);
+		if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            Block block = event.getClickedBlock();
+            switch(block.getType()) {
+            case BARREL:
+            case ANVIL:
+            case DECORATED_POT:
+            case SPRUCE_HANGING_SIGN:
+            case SPRUCE_SIGN:
+            case SPRUCE_TRAPDOOR:
+            	event.setCancelled(true);
+            	break;
+            default:
+            	return;
+            }
+        }
 	}
 	
 	@EventHandler
@@ -322,7 +339,7 @@ public class Game implements Listener {
 	}
 	
 	@EventHandler
-	public void onTakingOutItem(EntityDamageByEntityEvent event) {
+	public void onTakeOutItem(EntityDamageByEntityEvent event) {
 		if(!(event.getEntity() instanceof ItemFrame)) return;
 		
 		// Prevent taking out item in item frame

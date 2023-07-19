@@ -3,6 +3,7 @@ package net.nocpiun.bedwars.gui;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.*;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.*;
 import org.bukkit.inventory.meta.*;
@@ -42,6 +43,7 @@ public class TeamGUI extends GUI {
 	public void onClick(InventoryClickEvent event) {
 		if(!event.getView().getTitle().equals(title)) return;
 		if(event.getCurrentItem() == null) return;
+		if(event.getResult() != Result.ALLOW) return;
 		
 		Material chosenTeam = event.getCurrentItem().getType();
 		Player player = (Player) event.getWhoClicked();

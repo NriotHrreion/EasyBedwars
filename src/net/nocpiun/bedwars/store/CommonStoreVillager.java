@@ -6,6 +6,7 @@ import org.bukkit.*;
 import org.bukkit.enchantments.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.*;
+import org.bukkit.event.Event.Result;
 import org.bukkit.event.player.*;
 import org.bukkit.event.inventory.*;
 import org.bukkit.inventory.*;
@@ -48,7 +49,7 @@ public class CommonStoreVillager extends StoreVillager {
 		// Weapons
 		inventory.setItem(19, Utils.createStoreItem(Material.STONE_SWORD, "Stone Sword", 1, 10, CurrencyType.COPPER));
 		inventory.setItem(20, Utils.createStoreItem(Material.IRON_SWORD, "Iron Sword", 1, 7, CurrencyType.IRON));
-		inventory.setItem(21, Utils.createStoreItem(Material.DIAMOND_SWORD, "Diamond Sword", 1, 4, CurrencyType.EMERALD));
+		inventory.setItem(21, Utils.createStoreItem(Material.DIAMOND_SWORD, "Diamond Sword", 1, 6, CurrencyType.EMERALD));
 		inventory.setItem(23, Utils.createStoreItem(Material.BOW, "Bow", 1, 12, CurrencyType.IRON));
 		final HashMap<Enchantment, Integer> excaliburEnchantments = new HashMap<>();
 		excaliburEnchantments.put(Enchantment.KNOCKBACK, 1);
@@ -62,7 +63,7 @@ public class CommonStoreVillager extends StoreVillager {
 		efficientEnchantments.put(Enchantment.DIG_SPEED, 2);
 		inventory.setItem(37, Utils.createStoreItem(Material.SHEARS, "Shears", 1, 20, CurrencyType.COPPER, efficientEnchantments));
 		inventory.setItem(38, Utils.createStoreItem(Material.IRON_PICKAXE, "Pickaxe", 1, 12, CurrencyType.COPPER, efficientEnchantments));
-		inventory.setItem(39, Utils.createStoreItem(Material.IRON_AXE, "Axe", 1, 6, CurrencyType.IRON));
+		inventory.setItem(39, Utils.createStoreItem(Material.STONE_AXE, "Axe", 1, 3, CurrencyType.IRON));
 		inventory.setItem(40, Utils.createStoreItem(Material.ARROW, "Arrow", 8, 2, CurrencyType.IRON));
 		inventory.setItem(41, Utils.createStoreItem(Material.GOLDEN_APPLE, "Golden Apple", 1, 3, CurrencyType.IRON));
 		inventory.setItem(42, Utils.createStoreItem(Material.ENDER_PEARL, "Ender Pearl", 1, 4, CurrencyType.EMERALD));
@@ -82,6 +83,7 @@ public class CommonStoreVillager extends StoreVillager {
 	public void onClick(InventoryClickEvent event) {
 		if(!event.getView().getTitle().equals(title)) return;
 		if(event.getCurrentItem() == null) return;
+		if(event.getResult() != Result.ALLOW) return;
 		
 		super.onClick(event, event.getCurrentItem());
 	}

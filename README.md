@@ -41,7 +41,7 @@ The following is the usage of the commands in the plugin:
 |Ladder|16|4 Copper|
 |Stone Sword|1|10 Copper|
 |Iron Sword|1|7 Iron|
-|Diamond Sword|1|4 Emerald|
+|Diamond Sword|1|6 Emerald|
 |Bow|1|12 Iron|
 |Excalibur (Knockback Stick)|1|5 Iron|
 |Chainmail Armor|1|40 Copper|
@@ -49,7 +49,7 @@ The following is the usage of the commands in the plugin:
 |Diamond Armor|1|6 Emerald|
 |Shears|1|20 Copper|
 |Pickaxe|1|12 Copper|
-|Axe|1|6 Iron|
+|Axe|1|3 Iron|
 |Arrow|8|2 Iron|
 |Golden Apple|1|3 Iron|
 |Ender Pearl|1|4 Emerald|
