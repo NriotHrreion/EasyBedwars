@@ -302,18 +302,18 @@ public class Game implements Listener {
 		if(event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
 		
 		Block block = event.getClickedBlock();
-        switch(block.getType()) {
-        case BARREL:
-        case ANVIL:
-        case DECORATED_POT:
-        case SPRUCE_HANGING_SIGN:
-        case SPRUCE_SIGN:
-        case SPRUCE_TRAPDOOR:
-        	event.setCancelled(true);
-        	break;
-        default:
-        	return;
-        }
+		switch(block.getType()) {
+		case BARREL:
+		case ANVIL:
+		case DECORATED_POT:
+		case SPRUCE_HANGING_SIGN:
+		case SPRUCE_SIGN:
+		case SPRUCE_TRAPDOOR:
+			event.setCancelled(true);
+			break;
+		default:
+			return;
+		}
 	}
 	
 	@EventHandler
